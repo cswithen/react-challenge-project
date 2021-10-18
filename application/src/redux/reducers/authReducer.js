@@ -7,7 +7,7 @@ const authReducer = (state = INITIAL_STATE, action) => {
     case LOGIN:
       return {
         ...state,
-        email: action.payload.login,
+        email: action.payload.email,
         token: action.payload.token,
       };
     case LOGOUT:
