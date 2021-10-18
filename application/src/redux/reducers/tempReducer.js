@@ -1,9 +1,10 @@
-const INITIAL_STATE = { test: '' };
+const INITIAL_STATE = { test: "" };
 
-export default (state = INITIAL_STATE, action) => {
+const tempReducer = (state = INITIAL_STATE, action) => {
   switch (action.type) {
     default:
       return state;
   }
+};
 
-}
+export default tempReducer;
