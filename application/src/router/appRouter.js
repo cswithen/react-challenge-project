@@ -1,16 +1,33 @@
 import React from 'react';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Redirect, Switch } from 'react-router-dom';
 import { Main, Login, OrderForm, ViewOrders } from '../components';
+import {connect} from 'react-redux'
 
 const AppRouter = (props) => {
   return (
     <Router>
-      <Route path="/" exact component={Main} />
-      <Route path="/login" exact component={Login} />
-      <Route path="/order" exact component={OrderForm} />
-      <Route path="/view-orders" exact component={ViewOrders} />
+      {props.auth.token === null ? (
+        <Switch>
+          <Route path="/" exact component={Main} />
+          <Route path="/login" component={Login} />
+          <Redirect to="/login" />
+        </Switch>
+        ) : (
+          <Switch>
+          <Route path="/" exact component={Main} />
+          <Route path="/order" exact component={OrderForm} />
+          <Route path="/view-orders" exact component={ViewOrders} />
+          <Redirect to="/" />
+        </Switch>
+        )
+        }
+
     </Router>
   );
 }
 
-export default AppRouter;
+const mapStateToProps = (state) => ({
+  auth: state.auth
+})
+
+export default connect(mapStateToProps)(AppRouter);
