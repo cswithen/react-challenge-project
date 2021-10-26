@@ -57,7 +57,6 @@ class EditOrderForm extends Component {
         return (
                 <div className="form-wrapper">
                     <form>
-                        <label className="form-label">I'd like to order...</label><br />
                         <select
                             value={this.state.order_item}
                             onChange={(event) => this.menuItemChosen(event)}
@@ -78,7 +77,7 @@ class EditOrderForm extends Component {
                             <option value="5">5</option>
                             <option value="6">6</option>
                         </select>
-                        <button type="button" className="order-btn" onClick={(event) => this.submitOrder(event)}>Edit Order</button>
+                        <button type="button" className="order-btn" onClick={(event) => this.submitOrder(event)}>Confirm Order</button>
                     </form>
                 </div>
         );

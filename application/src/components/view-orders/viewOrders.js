@@ -8,9 +8,13 @@ const DELETE_ORDER_URL = `${SERVER_IP}/api/delete-order`
 
 
 class ViewOrders extends Component {
-    state = {
-        orders: [],
-        selectedOrder: ""
+    constructor(props) {
+        super(props)
+        this.state = {
+            orders: [],
+            selectedOrder: ""
+        }
+        this.deleteOrder = this.deleteOrder.bind(this)
     }
 
     componentDidMount() {
@@ -30,19 +34,22 @@ class ViewOrders extends Component {
     }
 
     deleteOrder(event) {
+        event.preventDefault()
+        let currentOrders = [...this.state.orders]
+        let id = event.target.id
         fetch(DELETE_ORDER_URL, {
             method: 'POST',
             body: JSON.stringify({
-                id: event.target.id,
+                id: id,
             }),
             headers: {
                 'Content-Type': 'application/json'
             }
         })
         .then(res => res.json())
-        .then(response => {console.log("Success", JSON.stringify(response))
-        })
+        .then(response => {console.log("Success", JSON.stringify(response))})
         .catch(error => console.error(error))
+        this.setState({orders: currentOrders.filter(order => order._id !== id)})
     }
 
     handleClick(event) {
@@ -84,7 +91,10 @@ class ViewOrders extends Component {
                                  <div className="col-md-4 view-order-right-col">
                                      <button className="btn btn-success" id={order._id} onClick={this.handleClick.bind(this)
                                      }>Edit</button>
-                                     <button className="btn btn-danger" id={order._id} onClick={this.deleteOrder}>Delete</button>
+                                     <button className="btn btn-danger" id={order._id} onClick={
+                                         this.deleteOrder
+
+                                    }>Delete</button>
                                  </div>
                                  {(this.state.selectedOrder === order._id ? <EditOrderForm editOrder={editOrder}/>: <div />)}
                             </div>
